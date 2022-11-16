@@ -27,7 +27,7 @@
 
   /* color: black; */
 }
-.sidebar-items {
+.sidebar-item {
   text-align: center;
   padding: 1rem 0rem;
   cursor: pointer;
@@ -37,7 +37,12 @@
   background-color: #4a4e74;
   color: white;
 } */
-.sidebar-items:focus {
+.sidebar-item:focus {
   background-color: #4a4e74;
   color: white;
+}
+
+.sidebar-items {
+  display: flex;
+  flex-wrap: nowrap;
 }

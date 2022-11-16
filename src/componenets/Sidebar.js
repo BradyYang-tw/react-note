@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import "./Sidebar.css";
 
-const Sidebar = ({ notes, onAdd, currentNote, setCurrentId }) => {
+const Sidebar = ({ notes, onAdd, currentNote, setCurrentId, onDelete }) => {
   let noteList = notes.map((d) => {
     return (
       <div
-        className="sidebar-items"
+        className="sidebar-item"
         key={d.id}
         tabindex="0"
         onClick={() => {
@@ -13,7 +13,14 @@ const Sidebar = ({ notes, onAdd, currentNote, setCurrentId }) => {
           setCurrentId(d.id);
         }}
       >
-        {d.name}
+        {d.content !== "Hello World" ? d.content.split("\n")[0] : d.name}
+        <button
+          onClick={(e) => {
+            onDelete(e, d.id);
+          }}
+        >
+          delete
+        </button>
       </div>
     );
   });
