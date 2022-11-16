@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Sidebar from "./componenets/Sidebar";
+import Editor from "./componenets/Editor";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [notes, setNotes] = useState([]);
+  const [currentId, setCurrentId] = useState("");
+
+  // For Sidebar call
+  const handleAddNote = (data) => {
+    console.log("trigger");
+    setNotes((prevNotes) => {
+      return [...prevNotes, data];
+    });
+  };
+
+  const findCurrentNote = () => {
+    let temp = notes.find((data) => {
+      return data.id == currentId;
+    });
+    return temp;
+  };
+
+  // for editor
+  const handleUpdateContent = (text) => {
+    // console.log("update content", data);
+    setNotes((oldNotes) =>
+      oldNotes.map((oldNote) => {
+        return oldNote.id === currentId
+          ? { ...oldNote, content: text }
+          : oldNote;
+      })
+    );
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Sidebar
+        notes={notes}
+        onAdd={handleAddNote}
+        currentNote={findCurrentNote()}
+        setCurrentId={setCurrentId}
+      ></Sidebar>
+      {currentId && (
+        <Editor item={findCurrentNote()} onUpdate={handleUpdateContent} />
+      )}
     </div>
   );
-}
+};
 
 export default App;
